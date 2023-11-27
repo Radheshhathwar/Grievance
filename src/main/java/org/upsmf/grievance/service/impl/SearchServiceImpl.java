@@ -339,9 +339,10 @@ public class SearchServiceImpl implements SearchService {
         SearchResponse searchResponse;
         String keyValue = searchRequest.getSort().keySet().iterator().next();
         keyValue = getKeyValue(keyValue);
+        int from = searchRequest.getPage() > 0 ? (searchRequest.getPage() * searchRequest.getSize()) : 0;
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(createTicketSearchQuery(searchRequest))
-                .from(searchRequest.getPage())
+                .from(from)
                 .size(searchRequest.getSize())
                 .sort(keyValue, SortOrder.valueOf(searchRequest.getSort().get(searchRequest.getSort().keySet().iterator().next()).toUpperCase()));
 
